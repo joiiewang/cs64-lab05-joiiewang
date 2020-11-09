@@ -8,10 +8,20 @@
 .text
 conv:
     # TODO: Write your function code here
+	li $t0, 0
+	li $t1, 0
+	loop:
+		add $t2, $a0, $a0
+	jr $ra
 
 main:
+	li $a0, 5
+	li $a1, 7
+	jal conv
 
 	# TODO: Write your main function code here
 
 exit:
+	li $v0, 10
+	syscall
 	# TODO: Write code to properly exit a SPIM simulation
