@@ -8,16 +8,42 @@
 .text
 conv:
     # TODO: Write your function code here
-	li $t0, 0
-	li $t1, 0
+	li $t0, 0 #z (a0 is x, a1 is y)
+	li $t1, 0 #i
+	li $t2, 5 #limit for i
+	li $t3, 3 #limit for x
 	loop:
-		add $t2, $a0, $a0
+		slt $t4, $t1, $t2
+		beq $t4, $zero, return
+		
+		add $t4, $a0, $a0
+		sub $t4, $t4, $a1
+		add $t0, $t0, $t4
+		
+		slt $t5, $t3, $a0
+		beq $t5, $zero, x_less
+		addi $a1, $a1, -1
+
+		x_less:
+			addi $a0, $a0, 1
+
+		addi $t1, $t1, 1
+
+		j loop
+		
+
+return:
+	move $v0, $t0
 	jr $ra
 
 main:
 	li $a0, 5
 	li $a1, 7
 	jal conv
+
+	move $a0, $v0
+	li $v0, 1
+	syscall
 
 	# TODO: Write your main function code here
 
